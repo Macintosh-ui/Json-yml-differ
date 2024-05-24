@@ -1,9 +1,9 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -41,9 +41,11 @@ public class Differ {
     public static Map<String, Object> getData(String fileLines) throws IOException {
         return parse(fileLines);
     }
-    public static Map<String, Object> parse(String fileData) throws JsonProcessingException {
+    public static Map<String, Object> parse(String filePath) throws IOException {
+        Path path = getFilePath(filePath);
+        File file = path.toFile();
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(fileData, new TypeReference<>() { });
+        return mapper.readValue(file, new TypeReference<>() { });
     }
     /* public static void example() throws IOException {
         String filepath = "/build/install/bin/example.JSON";
