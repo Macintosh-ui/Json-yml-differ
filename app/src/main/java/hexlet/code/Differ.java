@@ -1,35 +1,32 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.formatters.Stylish;
 
-import com.fasterxml.jackson.dataformat.yaml.*;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 public class Differ {
-    public static String generate(String filepath1, String filepath2) throws Exception {
-        Map<String, Object> data1 = ymlParse(filepath1);
-        Map<String, Object> data2 = ymlParse(filepath2);
+    public static String generate(String filepath1, String filepath2, String format) throws Exception {
+        Map<String, Object> data1 = new HashMap<>();
+        Map<String, Object> data2 = new HashMap<>();
+        if (getFilePath(filepath1).endsWith(".JSON")) {
+            data1 = Parser.jsonParse(filepath1);
+            data2 = Parser.jsonParse(filepath2);
+        } else if (getFilePath(filepath2).endsWith(".yml")) {
+            data1 = Parser.ymlParse(filepath1);
+            data2 = Parser.ymlParse(filepath2);
+        }
         Map<String, String> diff = getDiff(data1, data2);
-        var output = new StringBuilder();
-        diff.forEach((k, v) -> {
-            String value1 = String.valueOf(data1.get(k));
-            String value2 = String.valueOf(data2.get(k));
-            switch (v) {
-                case "change" ->
-                        output.append("  - ").append(k).append(": ").append(value1).append("\n").append("  + ").append(k).append(": ").append(value2).append("\n");
-                case "add" -> output.append("  + ").append(k).append(": ").append(value2).append("\n");
-                case "remove" -> output.append("  - ").append(k).append(": ").append(value1).append("\n");
-                case "no difference" -> output.append("    ").append(k).append(": ").append(value2).append("\n");
-            }
-        });
+        String output = Stylish.format(data1, data2, diff);
         System.out.println(output);
-        return output.toString();
+        return output;
+    }
+
+    public static String generate(String filepath1, String filepath2) throws Exception {
+        String format = "stylish";
+        return generate(filepath1, filepath2, format);
     }
 
     public static Map<String, String> getDiff (Map<String, Object> data1, Map<String, Object> data2) {
@@ -66,18 +63,6 @@ public class Differ {
         return Files.readAllLines(path);
     }
 
-    public static Map<String, Object> jsonParse(String filePath) throws IOException {
-        Path path = getFilePath(filePath);
-        File file = path.toFile();
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(file, new TypeReference<>() { });
-    }
-    public static Map<String, Object> ymlParse(String filePath) throws IOException {
-        Path path = getFilePath(filePath);
-        File file = path.toFile();
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
-        return mapper.readValue(file, new TypeReference<>() { });
-    }
     /* public static void example() throws IOException {
         String filepath = "/build/install/bin/example.JSON";
         var fileLines = readFile(filepath); //List
