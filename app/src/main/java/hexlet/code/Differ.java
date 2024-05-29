@@ -15,7 +15,17 @@ public class Differ {
         Map<String, Object> data2 = parse(filepath2);
         Map<String, String> diff = getDiff(data1, data2);
         var output = new StringBuilder();
-        diff.forEach((k, v) -> output.append(k).append("=").append(v).append("\n"));
+        diff.forEach((k, v) -> {
+            String value1 = String.valueOf(data1.get(k));
+            String value2 = String.valueOf(data2.get(k));
+            switch (v) {
+                case "change" ->
+                        output.append("  - ").append(k).append(": ").append(value1).append("\n").append("  + ").append(k).append(": ").append(value2).append("\n");
+                case "add" -> output.append("  + ").append(k).append(": ").append(value2).append("\n");
+                case "remove" -> output.append("  - ").append(k).append(": ").append(value1).append("\n");
+                case "no difference" -> output.append("    ").append(k).append(": ").append(value2).append("\n");
+            }
+        });
         System.out.println(output);
         return output.toString();
     }
@@ -28,7 +38,7 @@ public class Differ {
         String remove = "remove";
         String noDiff = "no difference";
         data1.forEach((k, v) -> {
-            if (!data2.containsKey(k) && !Objects.equals(v, data2.get(k))) {
+            if (data2.containsKey(k) && !Objects.equals(v, data2.get(k))) {
                 diff.put(k, change);
             } else if (!data2.containsKey(k)) {
                 diff.put(k, remove);
