@@ -13,23 +13,35 @@ public class Differ {
     public static String generate(String filepath1, String filepath2) throws Exception {
         Map<String, Object> data1 = parse(filepath1);
         Map<String, Object> data2 = parse(filepath2);
-        List<String> keys = new ArrayList<>(data1.keySet());
+        Map<String, String> diff = getDiff(data1, data2);
         var output = new StringBuilder();
-        keys.addAll(data2.keySet());
-        for (String key : keys) {
-            String value1 = data1.get(key).toString();
-            String value2 = data2.get(key).toString();
-            if (value1.contains(key) && value2.contains(key)) {
-                if(value1.equals(value2)) {
-                    output.append(" ").append(key).append(":").append(value1).append("\n");
-                } else {
-                    output.append("-").append(key).append(":").append(value2).append("\n");
-                    output.append("+").append(key).append(":").append(value1).append("\n");
-                }
-            }
-        }
+        diff.forEach((k, v) -> output.append(k).append("=").append(v).append("\n"));
         System.out.println(output);
         return output.toString();
+    }
+    public static Map<String, String> getDiff (Map<String, Object> data1, Map<String, Object> data2) {
+        Map<String, String> diff = new HashMap<>();
+        List<String> keys = new ArrayList<>(data1.keySet());
+        keys.addAll(data2.keySet());
+        String change = "change";
+        String add = "add";
+        String remove = "remove";
+        String noDiff = "no difference";
+        data1.forEach((k, v) -> {
+            if (!data2.containsKey(k) && !Objects.equals(v, data2.get(k))) {
+                diff.put(k, change);
+            } else if (!data2.containsKey(k)) {
+                diff.put(k, remove);
+            } else {
+                diff.put(k, noDiff);
+            }
+        });
+        data2.forEach((k, v) -> {
+            if (!data1.containsKey(k)) {
+                diff.put(k, add);
+            }
+        });
+        return diff;
     }
     public static Path getFilePath(String filepath) {
         return Path.of(filepath).toAbsolutePath().normalize();
