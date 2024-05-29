@@ -23,4 +23,22 @@ public class DiffTest {
         }
         assertEquals(expected, actual);
     }
+    @Test
+    public void testFilepath() {
+        String expected = "./testFiles/file1.JSON";
+        String actual = String.valueOf(Differ.getFilePath("./testFiles/file1.JSON"));
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testYamlDiff() {
+        var expected = """
+                  - follow: false
+                    host: hexlet.io
+                  - proxy: 123.234.53.22
+                  - timeout: 50
+                  + timeout: 20
+                  + verbose: true
+                """;
+    }
 }

@@ -3,6 +3,8 @@ package hexlet.code;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.fasterxml.jackson.dataformat.yaml.*;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,8 +13,8 @@ import java.util.*;
 
 public class Differ {
     public static String generate(String filepath1, String filepath2) throws Exception {
-        Map<String, Object> data1 = parse(filepath1);
-        Map<String, Object> data2 = parse(filepath2);
+        Map<String, Object> data1 = ymlParse(filepath1);
+        Map<String, Object> data2 = ymlParse(filepath2);
         Map<String, String> diff = getDiff(data1, data2);
         var output = new StringBuilder();
         diff.forEach((k, v) -> {
@@ -29,6 +31,7 @@ public class Differ {
         System.out.println(output);
         return output.toString();
     }
+
     public static Map<String, String> getDiff (Map<String, Object> data1, Map<String, Object> data2) {
         Map<String, String> diff = new HashMap<>();
         List<String> keys = new ArrayList<>(data1.keySet());
@@ -53,20 +56,26 @@ public class Differ {
         });
         return diff;
     }
+
     public static Path getFilePath(String filepath) {
         return Path.of(filepath).toAbsolutePath().normalize();
     }
+
     public static List<String> readFile(String filePath) throws IOException {
         Path path = getFilePath(filePath).toAbsolutePath().normalize();
         return Files.readAllLines(path);
     }
-    public static Map<String, Object> getData(String fileLines) throws IOException {
-        return parse(fileLines);
-    }
-    public static Map<String, Object> parse(String filePath) throws IOException {
+
+    public static Map<String, Object> jsonParse(String filePath) throws IOException {
         Path path = getFilePath(filePath);
         File file = path.toFile();
         ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(file, new TypeReference<>() { });
+    }
+    public static Map<String, Object> ymlParse(String filePath) throws IOException {
+        Path path = getFilePath(filePath);
+        File file = path.toFile();
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         return mapper.readValue(file, new TypeReference<>() { });
     }
     /* public static void example() throws IOException {
