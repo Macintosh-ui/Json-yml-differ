@@ -31,8 +31,6 @@ public class Differ {
 
     public static Map<String, String> getDiff (Map<String, Object> data1, Map<String, Object> data2) {
         Map<String, String> diff = new HashMap<>();
-        List<String> keys = new ArrayList<>(data1.keySet());
-        keys.addAll(data2.keySet());
         String change = "change";
         String add = "add";
         String remove = "remove";
@@ -56,11 +54,6 @@ public class Differ {
 
     public static Path getFilePath(String filepath) {
         return Path.of(filepath).toAbsolutePath().normalize();
-    }
-
-    public static List<String> readFile(String filePath) throws IOException {
-        Path path = getFilePath(filePath).toAbsolutePath().normalize();
-        return Files.readAllLines(path);
     }
 
     /* public static void example() throws IOException {
