@@ -1,17 +1,12 @@
 package hexlet.code;
 
-import hexlet.code.formatters.Plain;
-import hexlet.code.formatters.Stylish;
-
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 public class Differ {
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
-        Map<String, Object> data1 = new HashMap<>();
-        Map<String, Object> data2 = new HashMap<>();
+        TreeMap<String, Object> data1 = new TreeMap<>();
+        TreeMap<String, Object> data2 = new TreeMap<>();
         if (filepath1.endsWith(".JSON") && filepath2.endsWith(".JSON")) {
             data1 = Parser.jsonParse(filepath1);
             data2 = Parser.jsonParse(filepath2);
@@ -19,7 +14,7 @@ public class Differ {
             data1 = Parser.ymlParse(filepath1);
             data2 = Parser.ymlParse(filepath2);
         }
-        Map<String, String> diff = getDiff(data1, data2);
+        TreeMap<String, String> diff = getDiff(data1, data2);
         String output = Formatter.format(data1, data2, diff, format);
         System.out.println(output);
         return output;
@@ -30,8 +25,8 @@ public class Differ {
         return generate(filepath1, filepath2, format);
     }
 
-    public static Map<String, String> getDiff (Map<String, Object> data1, Map<String, Object> data2) {
-        Map<String, String> diff = new HashMap<>();
+    public static TreeMap<String, String> getDiff (Map<String, Object> data1, Map<String, Object> data2) {
+        TreeMap<String, String> diff = new TreeMap<>();
         String change = "change";
         String add = "add";
         String remove = "remove";
@@ -56,14 +51,4 @@ public class Differ {
     public static Path getFilePath(String filepath) {
         return Path.of(filepath).toAbsolutePath().normalize();
     }
-
-    /* public static void example() throws IOException {
-        String filepath = "/build/install/bin/example.JSON";
-        var fileLines = readFile(filepath); //List
-        Map<String, Object> data = getData(String.valueOf(fileLines));
-        String filePath2 = "/build/install/bin/example2.json";
-        var fileLines2 = readFile(filePath2);
-        Map<String, Object> data2 = getData(String.valueOf(fileLines2));
-        System.out.println();
-    }*/
 }

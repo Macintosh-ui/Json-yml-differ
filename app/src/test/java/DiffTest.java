@@ -8,16 +8,16 @@ public class DiffTest {
     @Test
     public void testDiff() {
         String expected = """
-                  - proxy: 123.234.53.22
-                    host: hexlet.io
                   - follow: false
+                    host: hexlet.io
+                  - proxy: 123.234.53.22
                   - timeout: 50
                   + timeout: 20
-                  + verbose: true\
+                  + verbose: true
                 """;
         String actual;
         try {
-            actual = Differ.generate("src/test/resources/testFiles/file1.JSON", "src/test/resources/testFiles/file1.JSON");
+            actual = Differ.generate("src/test/resources/file1.JSON", "src/test/resources/file2.JSON");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -25,8 +25,8 @@ public class DiffTest {
     }
     @Test
     public void testFilepath() {
-        String expected = "/Users/denis/java-project-71/app/src/main/resources/testFiles/file1.JSON";
-        String actual = String.valueOf(Differ.getFilePath("src/test/resources/testFiles/file1.JSON"));
+        String expected = "/Users/denis/java-project-71/app/src/test/resources/file1.JSON";
+        String actual = String.valueOf(Differ.getFilePath("src/test/resources/file1.JSON"));
         assertEquals(expected, actual);
     }
 
@@ -40,15 +40,14 @@ public class DiffTest {
                   + timeout: 20
                   + verbose: true
                 """;
-        String actual = Differ.generate("src/main/test/resources/file1.yml", "src/main/test/resources/file2.yml");
+        String actual = Differ.generate("src/test/resources/file1.yml", "src/test/resources/file2.yml");
         assertEquals(expected, actual);
     }
 
     @Test
     public void testIntegratedDiff() throws Exception {
         var expected = """
- {
-    chars1: [a, b, c]
+      chars1: [a, b, c]
   - chars2: [d, e, f]
   + chars2: false
   - checked: false
@@ -71,9 +70,8 @@ public class DiffTest {
   + setting2: 300
   - setting3: true
   + setting3: none
-}
-                """;
-        String actual = Differ.generate("src/main/test/resources/file3.JSON", "src/main/test/resources/file4.JSON");
+  """;
+        String actual = Differ.generate("src/test/resources/file3.JSON", "src/test/resources/file4.JSON");
         assertEquals(expected, actual);
     }
 }
