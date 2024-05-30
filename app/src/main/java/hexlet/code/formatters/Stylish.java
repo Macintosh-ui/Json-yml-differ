@@ -16,7 +16,7 @@ public class Stylish {
                 case "no difference" -> output.append("    ").append(k).append(": ").append(value2).append("\n");
             }
         });
-        output.append("}");
+        output.append("}\n");
         return output.toString();
     }
 }
