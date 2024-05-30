@@ -8,3 +8,6 @@
 
 ### ASCIINEMA OF YAML DIFFERENCE:
 [![asciicast](https://asciinema.org/a/kW5jcZUonkJpMjd9wiqXOQBQT.svg)](https://asciinema.org/a/kW5jcZUonkJpMjd9wiqXOQBQT)
+
+### ASCIINEMA OF NESTED FILES:
+[![asciicast](https://asciinema.org/a/FQ6vZOFEj2WnlRR16YwfIIPDn.svg)](https://asciinema.org/a/FQ6vZOFEj2WnlRR16YwfIIPDn)
