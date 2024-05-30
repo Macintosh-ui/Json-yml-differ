@@ -5,6 +5,7 @@ plugins {
     java
     application
     jacoco
+    checkstyle
 }
 
 group = "hexlet.code"
