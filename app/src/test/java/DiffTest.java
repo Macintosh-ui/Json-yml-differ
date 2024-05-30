@@ -15,7 +15,8 @@ public class DiffTest {
                   - timeout: 50
                   + timeout: 20
                   + verbose: true
-                  }""";
+                  }
+                  """;
         String actual;
         try {
             actual = Differ.generate("src/test/resources/file1.JSON", "src/test/resources/file2.JSON");
