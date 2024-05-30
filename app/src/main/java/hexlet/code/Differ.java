@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Plain;
 import hexlet.code.formatters.Stylish;
 
 import java.io.IOException;
@@ -19,7 +20,15 @@ public class Differ {
             data2 = Parser.ymlParse(filepath2);
         }
         Map<String, String> diff = getDiff(data1, data2);
-        String output = Stylish.format(data1, data2, diff);
+        String output = "";
+        switch (format) {
+            case "stylish" -> {
+                output = Stylish.format(data1, data2, diff);
+            }
+            case "plain" -> {
+                output = Plain.format(data1, data2, diff);
+            }
+        }
         System.out.println(output);
         return output;
     }
