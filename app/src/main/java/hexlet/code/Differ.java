@@ -11,10 +11,10 @@ public class Differ {
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
         Map<String, Object> data1 = new HashMap<>();
         Map<String, Object> data2 = new HashMap<>();
-        if (getFilePath(filepath1).endsWith(".JSON")) {
+        if (filepath1.endsWith(".JSON") && filepath2.endsWith(".JSON")) {
             data1 = Parser.jsonParse(filepath1);
             data2 = Parser.jsonParse(filepath2);
-        } else if (getFilePath(filepath2).endsWith(".yml")) {
+        } else if (filepath1.endsWith(".yml") && filepath2.endsWith(".yml")) {
             data1 = Parser.ymlParse(filepath1);
             data2 = Parser.ymlParse(filepath2);
         }
