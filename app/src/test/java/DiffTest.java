@@ -17,7 +17,7 @@ public class DiffTest {
                 """;
         String actual;
         try {
-            actual = Differ.generate("./testFiles/file1.JSON", "./testFiles/file2.JSON");
+            actual = Differ.generate("src/test/resources/testFiles/file1.JSON", "src/test/resources/testFiles/file1.JSON");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -25,8 +25,8 @@ public class DiffTest {
     }
     @Test
     public void testFilepath() {
-        String expected = "./testFiles/file1.JSON";
-        String actual = String.valueOf(Differ.getFilePath("./testFiles/file1.JSON"));
+        String expected = "/Users/denis/java-project-71/app/src/main/resources/testFiles/file1.JSON";
+        String actual = String.valueOf(Differ.getFilePath("src/test/resources/testFiles/file1.JSON"));
         assertEquals(expected, actual);
     }
 
@@ -40,7 +40,7 @@ public class DiffTest {
                   + timeout: 20
                   + verbose: true
                 """;
-        String actual = Differ.generate("./testFiles/file1.yml", "./testFiles/file2.yml");
+        String actual = Differ.generate("src/main/test/resources/file1.yml", "src/main/test/resources/file2.yml");
         assertEquals(expected, actual);
     }
 
@@ -73,6 +73,7 @@ public class DiffTest {
   + setting3: none
 }
                 """;
-
+        String actual = Differ.generate("src/main/test/resources/file3.JSON", "src/main/test/resources/file4.JSON");
+        assertEquals(expected, actual);
     }
 }
