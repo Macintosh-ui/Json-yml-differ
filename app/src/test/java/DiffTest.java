@@ -8,13 +8,14 @@ public class DiffTest {
     @Test
     public void testDiff() {
         String expected = """
+                  {
                   - follow: false
                     host: hexlet.io
                   - proxy: 123.234.53.22
                   - timeout: 50
                   + timeout: 20
                   + verbose: true
-                """;
+                  }""";
         String actual;
         try {
             actual = Differ.generate("src/test/resources/file1.JSON", "src/test/resources/file2.JSON");
@@ -33,13 +34,14 @@ public class DiffTest {
     @Test
     public void testYamlDiff() throws Exception {
         var expected = """
+                  {
                   - follow: false
                     host: hexlet.io
                   - proxy: 123.234.53.22
                   - timeout: 50
                   + timeout: 20
                   + verbose: true
-                """;
+                  }""";
         String actual = Differ.generate("src/test/resources/file1.yml", "src/test/resources/file2.yml");
         assertEquals(expected, actual);
     }
@@ -47,7 +49,8 @@ public class DiffTest {
     @Test
     public void testIntegratedDiff() throws Exception {
         var expected = """
-      chars1: [a, b, c]
+  {  
+    chars1: [a, b, c]
   - chars2: [d, e, f]
   + chars2: false
   - checked: false
@@ -70,7 +73,7 @@ public class DiffTest {
   + setting2: 300
   - setting3: true
   + setting3: none
-  """;
+  }""";
         String actual = Differ.generate("src/test/resources/file3.JSON", "src/test/resources/file4.JSON");
         assertEquals(expected, actual);
     }

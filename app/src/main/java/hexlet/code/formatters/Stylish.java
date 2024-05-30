@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class Stylish {
     public static String stylishFormat(Map<String, Object> data1, Map<String, Object> data2, Map<String, String> diff) {
-        var output = new StringBuilder();
+        var output = new StringBuilder("{\n");
         diff.forEach((k, v) -> {
             String value1 = String.valueOf(data1.get(k));
             String value2 = String.valueOf(data2.get(k));
@@ -16,6 +16,7 @@ public class Stylish {
                 case "no difference" -> output.append("    ").append(k).append(": ").append(value2).append("\n");
             }
         });
+        output.append("}");
         return output.toString();
     }
 }
