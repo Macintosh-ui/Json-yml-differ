@@ -14,3 +14,6 @@
 
 ### ASCIINEMA OF PLAIN FORMAT:
 [![asciicast](https://asciinema.org/a/xyMBQD8d2epDwl2z7XUTKHURg.svg)](https://asciinema.org/a/xyMBQD8d2epDwl2z7XUTKHURg)
+
+### ASCIINEMA OF JSON FORMAT:
+[![asciicast](https://asciinema.org/a/785duqe3u2Gr3RFzptd0hp6tS.svg)](https://asciinema.org/a/785duqe3u2Gr3RFzptd0hp6tS)
