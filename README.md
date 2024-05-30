@@ -11,3 +11,6 @@
 
 ### ASCIINEMA OF NESTED FILES:
 [![asciicast](https://asciinema.org/a/FQ6vZOFEj2WnlRR16YwfIIPDn.svg)](https://asciinema.org/a/FQ6vZOFEj2WnlRR16YwfIIPDn)
+
+### ASCIINEMA OF PLAIN FORMAT:
+[![asciicast](https://asciinema.org/a/xyMBQD8d2epDwl2z7XUTKHURg.svg)](https://asciinema.org/a/xyMBQD8d2epDwl2z7XUTKHURg)
