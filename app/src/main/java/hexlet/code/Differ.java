@@ -20,15 +20,7 @@ public class Differ {
             data2 = Parser.ymlParse(filepath2);
         }
         Map<String, String> diff = getDiff(data1, data2);
-        String output = "";
-        switch (format) {
-            case "stylish" -> {
-                output = Stylish.format(data1, data2, diff);
-            }
-            case "plain" -> {
-                output = Plain.format(data1, data2, diff);
-            }
-        }
+        String output = Formatter.format(data1, data2, diff, format);
         System.out.println(output);
         return output;
     }

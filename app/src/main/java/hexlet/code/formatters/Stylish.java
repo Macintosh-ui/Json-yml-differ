@@ -3,7 +3,7 @@ package hexlet.code.formatters;
 import java.util.Map;
 
 public class Stylish {
-    public static String format(Map<String, Object> data1, Map<String, Object> data2, Map<String, String> diff) {
+    public static String stylishFormat(Map<String, Object> data1, Map<String, Object> data2, Map<String, String> diff) {
         var output = new StringBuilder();
         diff.forEach((k, v) -> {
             String value1 = String.valueOf(data1.get(k));
