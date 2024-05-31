@@ -22,7 +22,7 @@ public class DiffTest {
                   """;
         String actual;
         try {
-            actual = Differ.generate("src/test/resources/file1.JSON", "src/test/resources/file2.JSON");
+            actual = Differ.generate("src/test/resources/fixtures/file1.JSON", "src/test/resources/fixtures/file2.JSON");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -30,8 +30,8 @@ public class DiffTest {
     }
     @Test
     public void testFilepath() {
-        String expected = "/Users/denis/java-project-71/app/src/test/resources/file1.JSON";
-        String actual = String.valueOf(Differ.getFilePath("src/test/resources/file1.JSON"));
+        String expected = "/Users/denis/java-project-71/app/src/test/resources/fixtures/file1.JSON";
+        String actual = String.valueOf(Differ.getFilePath("src/test/resources/fixtures/file1.JSON"));
         assertEquals(expected, actual);
     }
 
@@ -47,14 +47,14 @@ public class DiffTest {
                     + verbose: true
                   }
                   """;
-        String actual = Differ.generate("src/test/resources/file1.yml", "src/test/resources/file2.yml");
+        String actual = Differ.generate("src/test/resources/fixtures/file1.yml", "src/test/resources/fixtures/file2.yml");
         assertEquals(expected, actual);
     }
 
     @Test
     public void testIntegratedDiff() throws Exception {
-        var expected = Files.readString(Paths.get("src/test/resources/expectedStylish"));
-        String actual = Differ.generate("src/test/resources/file3.JSON", "src/test/resources/file4.JSON");
+        var expected = Files.readString(Paths.get("src/test/resources/fixtures/expectedStylish"));
+        String actual = Differ.generate("src/test/resources/fixtures/file3.JSON", "src/test/resources/fixtures/file4.JSON");
         assertEquals(expected, actual);
     }
 }
