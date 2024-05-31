@@ -24,10 +24,10 @@ public class Differ {
 
     public static String generate(String filepath1, String filepath2) throws Exception {
         String format = "stylish";
-        return generate (filepath1, filepath2, format);
+        return generate(filepath1, filepath2, format);
     }
 
-    public static TreeMap<String, String> getDiff (Map<String, Object> data1, Map<String, Object> data2) {
+    public static TreeMap<String, String> getDiff(Map<String, Object> data1, Map<String, Object> data2) {
         TreeMap<String, String> diff = new TreeMap<>();
         String change = "change";
         String add = "add";

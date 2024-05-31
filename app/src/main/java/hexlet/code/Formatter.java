@@ -11,12 +11,12 @@ public class Formatter {
                                 Map<String, String> diff, String format) throws Exception {
         format.toLowerCase();
         String output;
-        switch (format) {
-            case "stylish" -> output = Stylish.stylishFormat(data1, data2, diff);
-            case "plain" -> output = Plain.plainFormat(data1, data2, diff);
-            case "json" -> output = Json.jsonFormat(diff);
+        output = switch (format) {
+            case "stylish" -> Stylish.stylishFormat(data1, data2, diff);
+            case "plain" -> Plain.plainFormat(data1, data2, diff);
+            case "json" -> Json.jsonFormat(diff);
             default -> throw new IllegalArgumentException("Unsupported format: " + format);
-        }
+        };
         return output;
     }
 }
