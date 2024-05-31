@@ -10,10 +10,12 @@ public class Stylish {
             String value2 = String.valueOf(data2.get(k));
             switch (v) {
                 case "change" ->
-                        output.append("  - ").append(k).append(": ").append(value1).append("\n").append("  + ").append(k).append(": ").append(value2).append("\n");
+                        output.append("  - ").append(k).append(": ").append(value1).append("\n").append("  + ")
+                                .append(k).append(": ").append(value2).append("\n");
                 case "add" -> output.append("  + ").append(k).append(": ").append(value2).append("\n");
                 case "remove" -> output.append("  - ").append(k).append(": ").append(value1).append("\n");
                 case "no difference" -> output.append("    ").append(k).append(": ").append(value2).append("\n");
+                default -> throw new IllegalStateException("Unexpected value: " + v);
             }
         });
         output.append("}\n");

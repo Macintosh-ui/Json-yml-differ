@@ -10,9 +10,12 @@ public class Plain {
             String value2 = String.valueOf(data2.get(k));
             switch (v) {
                 case "change" ->
-                        output.append("Property '").append(k).append("' was updated. From ").append(value1).append(" to ").append(value2).append(".\n");
-                case "add" -> output.append("Property '").append(k).append("' was added with value '").append(value2).append("'\n");
+                        output.append("Property '").append(k).append("' was updated. From ")
+                                .append(value1).append(" to ").append(value2).append(".\n");
+                case "add" -> output.append("Property '").append(k).append("' was added with value '")
+                        .append(value2).append("'\n");
                 case "remove" -> output.append("Property '").append(k).append("' was removed").append("\n");
+                default -> output.append("");
                 //case "no difference" -> output.append("    ").append(k).append(": ").append(value2).append("\n");
             }
         });

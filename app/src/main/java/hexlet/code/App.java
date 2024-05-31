@@ -15,7 +15,8 @@ public class App implements Callable<Integer> {
     private String filepath1;
     @Parameters(paramLabel = "filepath2", description = "path to the second file.")
     private String filepath2;
-    @Option(names = {"-f", "--outputFormat"}, defaultValue = "stylish", description = "output outputFormat [default: stylish]", paramLabel = "outputFormat")
+    @Option(names = {"-f", "--outputFormat"}, defaultValue = "stylish",
+            description = "output outputFormat [default: stylish]", paramLabel = "outputFormat")
     private String outputFormat;
     public static void main(String[] args) {
         CommandLine commandLine = new CommandLine(new App());

@@ -1,7 +1,9 @@
 package hexlet.code;
 
 import java.nio.file.Path;
-import java.util.*;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Objects;
 
 public class Differ {
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
@@ -22,7 +24,7 @@ public class Differ {
 
     public static String generate(String filepath1, String filepath2) throws Exception {
         String format = "stylish";
-        return generate(filepath1, filepath2, format);
+        return generate (filepath1, filepath2, format);
     }
 
     public static TreeMap<String, String> getDiff (Map<String, Object> data1, Map<String, Object> data2) {
