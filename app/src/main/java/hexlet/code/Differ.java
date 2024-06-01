@@ -51,6 +51,12 @@ public class Differ {
     }
 
     public static Path getFilePath(String filepath) {
-        return Path.of(filepath).toAbsolutePath().normalize();
+        Path output = null;
+        try {
+            output = Path.of(filepath).toAbsolutePath().normalize();
+        } catch (Exception e) {
+            System.out.println("File not found: " + filepath);
+        }
+        return output;
     }
 }
