@@ -18,7 +18,7 @@ public class Stylish {
                 default -> throw new IllegalStateException("Unexpected value: " + v);
             }
         });
-        output.append("}\n");
+        output.append("}");
         return output.toString();
     }
 }
