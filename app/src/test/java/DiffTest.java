@@ -17,7 +17,7 @@ public class DiffTest {
 
     @Test
     public void testYamlDiff() throws Exception {
-        var expected = Files.readString(Paths.get("src/test/resources/fixtures/expectedStylish"));
+        var expected = Files.readString(Paths.get("src/test/resources/fixtures/expectedStylish")).trim();
         String actual = Differ.generate("src/test/resources/fixtures/file1.yml",
                                         "src/test/resources/fixtures/file2.yml");
         assertEquals(expected, actual);
@@ -25,7 +25,7 @@ public class DiffTest {
 
     @Test
     public void testIntegratedDiff() throws Exception {
-        var expected = Files.readString(Paths.get("src/test/resources/fixtures/expectedStylish"));
+        var expected = Files.readString(Paths.get("src/test/resources/fixtures/expectedStylish")).trim();
         String actual = Differ.generate("src/test/resources/fixtures/file3.JSON",
                                         "src/test/resources/fixtures/file4.JSON");
         assertEquals(expected, actual);
