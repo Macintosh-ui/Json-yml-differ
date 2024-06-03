@@ -20,7 +20,7 @@ public class Differ {
             data2 = Parser.jsonParse(filepath2);
         }
         TreeMap<String, String> diff = getDiff(data1, data2);
-        String output = Formatter.format(data1, data2, diff, format);
+        String output = Formatter.format(data1, data2, diff, format).trim();
         System.out.println(output);
         return output;
     }
