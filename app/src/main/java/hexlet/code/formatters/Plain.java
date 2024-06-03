@@ -38,12 +38,12 @@ public class Plain {
     }
     public static void complexCheck(String k, String value1, String value2, StringBuilder output) {
         if (value1.startsWith("[") || value1.startsWith("{")) {
-            output.append("[complex value]").append(" to ");
+            value1 = "[complex value]";
         }
         if (value2.startsWith("[") || value2.startsWith("{")) {
-            output.append("[complex value]").append(".\n");
-        } else {
-            output.append(value1).append(" to ").append(value2).append("\n");
+           value2 = "[complex value]";
         }
+        output.append(value1).append(" to ").append(value2).append("\n");
+
     }
 }
