@@ -6,8 +6,8 @@ public class Plain {
     public static String plainFormat(Map<String, Object> data1, Map<String, Object> data2, Map<String, String> diff) {
         StringBuilder output = new StringBuilder();
         diff.forEach((k, v) -> {
-            String value1 = String.valueOf(data1.get(k));
-            String value2 = String.valueOf(data2.get(k));
+            var value1 = data1.get(k);
+            var value2 = data2.get(k);
             switch (v) {
                 case "change" -> changeValue(k, value1, value2, output);
                 case "add" -> addValue(k, value1, value2, output);
@@ -19,18 +19,18 @@ public class Plain {
         return output.toString();
     }
 
-    public static void addValue(String k, String value1, String value2, StringBuilder output) {
+    public static void addValue(String k, Object value1, Object value2, StringBuilder output) {
         output.append("Property '").append(k).append("' was added with value: ");
         complexCheck(k, value2, output);
     }
 
-    public static void changeValue(String k, String value1, String value2, StringBuilder output) {
+    public static void changeValue(String k, Object value1, Object value2, StringBuilder output) {
         output.append("Property '").append(k).append("' was updated. From ");
-        complexCheck(k, value1, value2, output);
+        complexCheck(k,value1, value2, output);
     }
 
-    public static void complexCheck(String k, String value2, StringBuilder output) {
-        if (value2.startsWith("[") || value2.startsWith("{")) {
+    public static void complexCheck(String k, Object value2, StringBuilder output) {
+        if (String.valueOf(value2).startsWith("[") || String.valueOf(value2).startsWith("{")) {
             output.append("[complex value]").append("\n");
         } else {
             output.append("'").append(value2).append("'").append("\n");
