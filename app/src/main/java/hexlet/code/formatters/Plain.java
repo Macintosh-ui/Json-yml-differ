@@ -49,9 +49,9 @@ public class Plain {
             output.append(value1).append(" to '").append(value1).append("'").append("\n");
         } else if (value2.equals("[complex value]")) {
             output.append("'").append(value1).append("'").append(" to ").append(value2).append("\n");
-        } else if (value1.equals("true") || value1.equals("false") || value2.equals("true") || value2.equals("false")) {
+        } /* else if (value1.equals("true") || value1.equals("false") || value2.equals("true") || value2.equals("false")) {
             output.append(value1).append(" to ").append(value2).append("\n");
-        }
+        }*/
         else {
             output.append("'").append(value1).append("'").append(" to '").append(value2).append("'").append("\n");
         }
