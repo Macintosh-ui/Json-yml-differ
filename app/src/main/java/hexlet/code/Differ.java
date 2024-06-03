@@ -15,6 +15,9 @@ public class Differ {
         } else if (filepath1.endsWith(".yml") && filepath2.endsWith(".yml")) {
             data1 = Parser.ymlParse(filepath1);
             data2 = Parser.ymlParse(filepath2);
+        } else if (filepath1.endsWith(".JSON") && filepath2.endsWith(".JSON")) {
+            data1 = Parser.jsonParse(filepath1);
+            data2 = Parser.jsonParse(filepath2);
         }
         TreeMap<String, String> diff = getDiff(data1, data2);
         String output = Formatter.format(data1, data2, diff, format);

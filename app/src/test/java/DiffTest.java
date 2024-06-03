@@ -10,8 +10,8 @@ public class DiffTest {
 
     @Test
     public void testFilepath() {
-        String expected = "/Users/denis/java-project-71/app/src/test/resources/fixtures/file1.JSON";
-        String actual = String.valueOf(Differ.getFilePath("src/test/resources/fixtures/file1.JSON"));
+        String expected = "/Users/denis/java-project-71/app/src/test/resources/fixtures/file1.json";
+        String actual = String.valueOf(Differ.getFilePath("src/test/resources/fixtures/file1.json"));
         assertEquals(expected, actual);
     }
 
