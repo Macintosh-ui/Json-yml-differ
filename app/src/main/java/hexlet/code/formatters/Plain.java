@@ -41,9 +41,18 @@ public class Plain {
             value1 = "[complex value]";
         }
         if (value2.startsWith("[") || value2.startsWith("{")) {
-           value2 = "[complex value]";
+            value2 = "[complex value]";
         }
-        output.append(value1).append(" to ").append(value2).append("\n");
+        if (value1.equals("[complex value]") && value2.equals("[complex value]")) {
+            output.append(value1).append(" to ").append(value2).append("\n");
+        } else if (value1.equals("[complex value]")) {
+            output.append(value1).append(" to '").append(value1).append("'").append("\n");
+        } else if (value2.equals("[complex value]")) {
+            output.append("'").append(value1).append("'").append(" to ").append(value2).append("\n");
+        } else {
+            output.append("'").append(value1).append("'").append(" to '").append(value2).append("'").append("\n");
+        }
+
 
     }
 }
