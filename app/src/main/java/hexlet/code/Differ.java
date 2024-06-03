@@ -9,7 +9,7 @@ public class Differ {
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
         TreeMap<String, Object> data1 = new TreeMap<>();
         TreeMap<String, Object> data2 = new TreeMap<>();
-        if (filepath1.endsWith(".JSON") && filepath2.endsWith(".JSON")) {
+        if (filepath1.endsWith(".json") && filepath2.endsWith(".json")) {
             data1 = Parser.jsonParse(filepath1);
             data2 = Parser.jsonParse(filepath2);
         } else if (filepath1.endsWith(".yml") && filepath2.endsWith(".yml")) {
