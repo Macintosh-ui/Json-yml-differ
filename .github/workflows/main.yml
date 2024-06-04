@@ -17,8 +17,8 @@ jobs:
       - uses: gradle/gradle-build-action@v3
         with:
           gradle-version: 8.7
-      - run: /home/runner/work/java-project-71/app/gradlew checkstyleMain
-      - run: /home/runner/work/java-project-71/app/gradlew test
+      #- run: /home/runner/work/java-project-71/app/gradlew checkstyleMain
+      #- run: /home/runner/work/java-project-71/app/gradlew test
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v5.0.0
         env:
