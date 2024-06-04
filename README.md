@@ -2,12 +2,12 @@
 This is a console utility program, which can generate a difference between two .json or .yml files.
 ***
 Generation report supports the following formats:
-+ Stylish (add an -f stylish after file paths)
-+ Plain (add an -f plain after file paths)
-+ Json (add an -f json after file paths)
++ Stylish (add an '-f stylish' after file paths)
++ Plain (add an '-f plain' after file paths)
++ Json (add an '-f json' after file paths)
 ***
 Requirements:
-- Terminal (*nix system)
+- *nix system
 - JDK v.21
 ***
 ## Hexlet tests and linter status:
