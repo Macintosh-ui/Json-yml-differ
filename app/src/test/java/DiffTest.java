@@ -31,4 +31,10 @@ public class DiffTest {
                                         "src/test/resources/fixtures/file4.JSON");
         assertEquals(expected, actual);
     }
+    @Test
+    public void testPlainDiff() throws Exception {
+        var expected = Files.readString(Paths.get("src/test/resources/fixtures/expectedStylish")).trim();
+        String actual = Differ.generate("src/test/resources/fixtures/file3.JSON",
+                                        "src/test/resources/fixtures/file4.JSON", "plain");
+    }
 }
