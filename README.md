@@ -1,5 +1,5 @@
 # JSON and YAML Differ
-This is a console utility program, which can generate a difference between two .json or .yml files./
+This is a console utility program, which can generate a difference between two .json or .yml files.
 ***
 Generation report supports the following formats:
 + Stylish (add an -f stylish after file paths)
