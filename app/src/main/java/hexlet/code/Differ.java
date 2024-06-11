@@ -1,26 +1,26 @@
 package hexlet.code;
 
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.Objects;
+import java.util.*;
 
 public class Differ {
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
-        TreeMap<String, Object> data1 = new TreeMap<>();
-        TreeMap<String, Object> data2 = new TreeMap<>();
-        if (filepath1.endsWith(".json") && filepath2.endsWith(".json")) {
-            data1 = Parser.jsonParse(filepath1);
-            data2 = Parser.jsonParse(filepath2);
-        } else if (filepath1.endsWith(".yml") && filepath2.endsWith(".yml")) {
-            data1 = Parser.ymlParse(filepath1);
-            data2 = Parser.ymlParse(filepath2);
-        } else if (filepath1.endsWith(".JSON") && filepath2.endsWith(".JSON")) {
-            data1 = Parser.jsonParse(filepath1);
-            data2 = Parser.jsonParse(filepath2);
-        }
-        TreeMap<String, String> diff = getDiff(data1, data2);
-        String output = Formatter.format(data1, data2, diff, format).trim();
+        TreeMap<String, Object> data1;
+        TreeMap<String, Object> data2;
+        data1 = switch (getFileExtension(filepath1)) {
+            case ".json" -> Parser.jsonParse(filepath1);
+            case ".yml" -> Parser.ymlParse(filepath1);
+            default -> throw new IllegalArgumentException("Unsupported file format: " + getFileExtension(filepath1));
+        };
+        data2 = switch (getFileExtension(filepath2)) {
+            case ".json" -> Parser.jsonParse(filepath2);
+            case ".yml" -> Parser.ymlParse(filepath2);
+            default -> throw new IllegalArgumentException("Unsupported file format: " + getFileExtension(filepath2));
+        };
+        List<Map<String, Object>> diff = jsonDiff(data1, data2);
+        String output1 = Formatter.newFormat(diff, format);
+        String output = Formatter.format(data1, data2, diff, format).trim();//Formatter.format(diff) а форматтер уже начинает работать и вытягивать значения
+        //из каждой мапы листа.
         System.out.println(output);
         return output;
     }
@@ -30,24 +30,79 @@ public class Differ {
         return generate(filepath1, filepath2, format);
     }
 
+    private static String getFileExtension(String filepath) {
+        String extension = "";
+        if (filepath.endsWith(".json") || filepath.endsWith(".JSON")) {
+            extension = ".json";
+        } else {
+            extension = ".yml";
+        }
+        return extension;
+    }
     public static TreeMap<String, String> getDiff(Map<String, Object> data1, Map<String, Object> data2) {
+        List<Map<String, Object>> differ = new ArrayList<>();
+        Map<String, Object> diff2 = new HashMap<>();
         TreeMap<String, String> diff = new TreeMap<>();
-        String change = "change";
-        String add = "add";
-        String remove = "remove";
-        String noDiff = "no difference";
+            enum status {
+                CHANGE, ADD, REMOVE, noDIFF
+            }
+            /*String change = "change";
+            String add = "add";
+            String remove = "remove";
+            String noDiff = "no difference";
+            */
+
         data1.forEach((k, v) -> {
             if (data2.containsKey(k) && !Objects.equals(v, data2.get(k))) {
-                diff.put(k, change);
+                diff2.put(k, String.valueOf(status.CHANGE));
             } else if (!data2.containsKey(k)) {
-                diff.put(k, remove);
+                diff2.put(k, String.valueOf(status.REMOVE));
             } else {
-                diff.put(k, noDiff);
+                diff2.put(k, String.valueOf(status.noDIFF));
             }
         });
         data2.forEach((k, v) -> {
             if (!data1.containsKey(k)) {
-                diff.put(k, add);
+                diff2.put(k, String.valueOf(status.ADD));
+            }
+        });
+        differ.add(diff2);
+        return diff;
+    }
+    public static List<Map<String, Object>> jsonDiff(Map<String, Object> data1, Map<String, Object> data2) {
+        TreeMap<String, Object> differ = new TreeMap<>();
+        List<Map<String, Object>> diff = new ArrayList<>();
+        enum status {
+            CHANGE, ADD, REMOVE, noDIFF
+        }
+        data1.forEach((k, v) -> {
+            if (data2.containsKey(k) && !Objects.equals(v, data2.get(k))) {
+                differ.put("key", k);
+                differ.put("type", status.CHANGE);
+                differ.put("value1", data1.get(k));
+                differ.put("value2", data2.get(k));
+                diff.add(differ);
+                differ.clear();
+            } else if (!data2.containsKey(k)) {
+                differ.put("key", k);
+                differ.put("type", status.REMOVE);
+                differ.put("value", data1.get(k));
+                diff.add(differ);
+                differ.clear();
+            } else {
+                differ.put("key", k);
+                differ.put("type", status.noDIFF);
+                diff.add(differ);
+                differ.clear();
+            }
+        });
+        data2.forEach((k, v) -> {
+            if (!data1.containsKey(k)) {
+                differ.put("key", k);
+                differ.put("type", status.ADD);
+                differ.put("value", data2.get(k));
+                diff.add(differ);
+                differ.clear();
             }
         });
         return diff;

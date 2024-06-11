@@ -4,6 +4,7 @@ import hexlet.code.formatters.Json;
 import hexlet.code.formatters.Plain;
 import hexlet.code.formatters.Stylish;
 
+import java.util.List;
 import java.util.Map;
 
 public class Formatter {
@@ -18,5 +19,12 @@ public class Formatter {
             default -> throw new IllegalArgumentException("Unsupported format: " + format);
         };
         return output;
+    }
+
+    public static String newFormat(List<Map<String, Object>> diff, String format) {
+        String output;
+        output = switch(format) {
+            case "stylish" -> Stylish.newStylishFormat(diff);
+        }
     }
 }

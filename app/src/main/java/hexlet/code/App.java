@@ -21,13 +21,6 @@ public final class App implements Callable<Integer> {
     public static void main(String[] args) {
         CommandLine commandLine = new CommandLine(new App());
         commandLine.parseArgs(args);
-        if (commandLine.isUsageHelpRequested()) {
-            commandLine.usage(System.out);
-            return;
-        } else if (commandLine.isVersionHelpRequested()) {
-            commandLine.printVersionHelp(System.out);
-            return;
-        }
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
     }

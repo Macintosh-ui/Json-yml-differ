@@ -1,5 +1,6 @@
 package hexlet.code.formatters;
 
+import java.util.List;
 import java.util.Map;
 
 public class Stylish {
@@ -9,16 +10,33 @@ public class Stylish {
             String value1 = String.valueOf(data1.get(k));
             String value2 = String.valueOf(data2.get(k));
             switch (v) {
-                case "change" ->
+                case "CHANGE" ->
                         output.append("  - ").append(k).append(": ").append(value1).append("\n").append("  + ")
                                 .append(k).append(": ").append(value2).append("\n");
-                case "add" -> output.append("  + ").append(k).append(": ").append(value2).append("\n");
-                case "remove" -> output.append("  - ").append(k).append(": ").append(value1).append("\n");
-                case "no difference" -> output.append("    ").append(k).append(": ").append(value2).append("\n");
+                case "ADD" -> output.append("  + ").append(k).append(": ").append(value2).append("\n");
+                case "REMOVE" -> output.append("  - ").append(k).append(": ").append(value1).append("\n");
+                case "noDIFF" -> output.append("    ").append(k).append(": ").append(value2).append("\n");
                 default -> throw new IllegalStateException("Unexpected value: " + v);
             }
         });
         output.append("}");
+        return output.toString();
+    }
+
+    public static String newStylishFormat(List<Map<String, Object>> diff) {
+        var output = new StringBuilder("{\n");
+        diff.forEach(m -> {
+            m.forEach((k, v) -> {
+               for(var key : m.keySet()) {
+                   switch(key) {
+                       case "CHANGE" ->
+                               output.append("  - ").append(k).append(": ").append().append("\n").append("  + ")
+                                       .append(k).append(": ").append(value2).append("\n");
+                   }
+               }
+            });
+        });
+
         return output.toString();
     }
 }
