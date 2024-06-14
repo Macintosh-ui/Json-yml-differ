@@ -4,11 +4,11 @@ import hexlet.code.formatters.Json;
 import hexlet.code.formatters.Plain;
 import hexlet.code.formatters.Stylish;
 
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Formatter {
-    public static String format(Map<String, Object> data1, Map<String, Object> data2,
+    /*public static String format(Map<String, Object> data1, Map<String, Object> data2,
                                 Map<String, String> diff, String format) throws Exception {
         format.toLowerCase();
         String output;
@@ -19,12 +19,14 @@ public class Formatter {
             default -> throw new IllegalArgumentException("Unsupported format: " + format);
         };
         return output;
-    }
+    }*/
 
-    public static String newFormat(List<Map<String, Object>> diff, String format) {
+    public static String format(Set<Map<String, Object>> diff, String format) {
         String output;
         output = switch(format) {
             case "stylish" -> Stylish.newStylishFormat(diff);
-        }
+            default -> throw new IllegalStateException("Unexpected format: " + format);
+        };
+        return output;
     }
 }

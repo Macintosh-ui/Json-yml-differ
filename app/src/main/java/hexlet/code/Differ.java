@@ -17,9 +17,8 @@ public class Differ {
             case ".yml" -> Parser.ymlParse(filepath2);
             default -> throw new IllegalArgumentException("Unsupported file format: " + getFileExtension(filepath2));
         };
-        List<Map<String, Object>> diff = jsonDiff(data1, data2);
-        String output1 = Formatter.newFormat(diff, format);
-        String output = Formatter.format(data1, data2, diff, format).trim();//Formatter.format(diff) а форматтер уже начинает работать и вытягивать значения
+        Set<Map<String, Object>> diff = getDiff(data1, data2);
+        String output = Formatter.format(diff, format).trim();//Formatter.format(diff) а форматтер уже начинает работать и вытягивать значения
         //из каждой мапы листа.
         System.out.println(output);
         return output;
@@ -31,7 +30,7 @@ public class Differ {
     }
 
     private static String getFileExtension(String filepath) {
-        String extension = "";
+        String extension;
         if (filepath.endsWith(".json") || filepath.endsWith(".JSON")) {
             extension = ".json";
         } else {
@@ -39,7 +38,7 @@ public class Differ {
         }
         return extension;
     }
-    public static TreeMap<String, String> getDiff(Map<String, Object> data1, Map<String, Object> data2) {
+    public static TreeMap<String, String> getDiff1(Map<String, Object> data1, Map<String, Object> data2) {
         List<Map<String, Object>> differ = new ArrayList<>();
         Map<String, Object> diff2 = new HashMap<>();
         TreeMap<String, String> diff = new TreeMap<>();
@@ -69,40 +68,41 @@ public class Differ {
         differ.add(diff2);
         return diff;
     }
-    public static List<Map<String, Object>> jsonDiff(Map<String, Object> data1, Map<String, Object> data2) {
-        TreeMap<String, Object> differ = new TreeMap<>();
-        List<Map<String, Object>> diff = new ArrayList<>();
+    public static Set<Map<String, Object>> getDiff(Map<String, Object> data1, Map<String, Object> data2) {
+       // LinkedHashMap<String, Object> differ = new LinkedHashMap<>();
+        TreeSet<Map<String, Object>> diff = new TreeSet<>();
         enum status {
             CHANGE, ADD, REMOVE, noDIFF
         }
         data1.forEach((k, v) -> {
             if (data2.containsKey(k) && !Objects.equals(v, data2.get(k))) {
-                differ.put("key", k);
-                differ.put("type", status.CHANGE);
-                differ.put("value1", data1.get(k));
-                differ.put("value2", data2.get(k));
-                diff.add(differ);
-                differ.clear();
+                Map<String, Object> difference = new HashMap<>();
+                difference.put("key", k);
+                difference.put("type", status.CHANGE);
+                difference.put("value1", data1.get(k));
+                difference.put("value2", data2.get(k));
+                diff.add(difference);
             } else if (!data2.containsKey(k)) {
-                differ.put("key", k);
-                differ.put("type", status.REMOVE);
-                differ.put("value", data1.get(k));
-                diff.add(differ);
-                differ.clear();
+                Map<String, Object> differenceRM = new HashMap<>();
+                differenceRM.put("key", k);
+                differenceRM.put("type", status.REMOVE);
+                differenceRM.put("value", data1.get(k));
+                diff.add(differenceRM);
             } else {
-                differ.put("key", k);
-                differ.put("type", status.noDIFF);
-                diff.add(differ);
-                differ.clear();
+                Map<String, Object> differenceNoDiff = new HashMap<>();
+                differenceNoDiff.put("key", k);
+                differenceNoDiff.put("type", status.noDIFF);
+                differenceNoDiff.put("value", data2.get(k));
+                diff.add(differenceNoDiff);
             }
         });
         data2.forEach((k, v) -> {
             if (!data1.containsKey(k)) {
-                differ.put("key", k);
-                differ.put("type", status.ADD);
-                differ.put("value", data2.get(k));
-                diff.add(differ);
-                differ.clear();
+                Map<String, Object> differenceADD = new HashMap<>();
+                differenceADD.put("key", k);
+                differenceADD.put("type", status.ADD);
+                differenceADD.put("value", data2.get(k));
+                diff.add(differenceADD);
             }
         });
         return diff;
