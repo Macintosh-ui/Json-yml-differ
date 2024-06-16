@@ -1,24 +1,22 @@
 package hexlet.code.formatters;
 
+import java.util.List;
 import java.util.Map;
 
 public class Plain {
-    public static String plainFormat(Map<String, Object> data1, Map<String, Object> data2, Map<String, String> diff) {
+
+    public static String plainFormat(List<Map<String, Object>> diff) {
         StringBuilder output = new StringBuilder();
-        diff.forEach((k, v) -> {
-            var value1 = data1.get(k);
-            var value2 = data2.get(k);
-            switch (v) {
-                case "change" -> changeValue(k, value1, value2, output);
-                case "add" -> addValue(k, value1, value2, output);
-                case "remove" -> output.append("Property '").append(k).append("' was removed").append("\n");
+        diff.forEach(m -> {
+            switch (m.get("type").toString()) {
+                case "CHANGE" -> changeValue(m.get("key").toString(), m.get("value1"), m.get("value2"), output);
+                case "ADD" -> addValue(m.get("key").toString(), m.get("value"), output);
+                case "REMOVE" -> output.append("Property '").append(m.get("key")).append("' was removed").append("\n");
                 default -> output.append("");
-                //case "no difference" -> output.append("    ").append(k).append(": ").append(value2).append("\n");
             }
         });
         return output.toString();
     }
-
     private static void changeValue(String k, Object v1, Object v2, StringBuilder output) {
         output.append("Property '").append(k).append("' was updated. From ");
         bracketCheck(v1, output);
@@ -26,7 +24,7 @@ public class Plain {
         bracketCheck(v2, output);
         output.append("\n");
     }
-    private static void addValue(String k, Object v1, Object v2, StringBuilder output) {
+    private static void addValue(String k, Object v2, StringBuilder output) {
         output.append("Property '").append(k).append("' was added with value: ");
         bracketCheck(v2, output);
         output.append("\n");

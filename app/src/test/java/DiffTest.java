@@ -45,4 +45,11 @@ public class DiffTest {
                                         "src/test/resources/fixtures/PlaintTest2.yml", "plain");
         assertEquals(expected, actual);
     }
+    @Test
+    public void testJsonFormat() throws Exception {
+        var expected = Files.readString(Paths.get("src/test/resources/fixtures/expectedJson")).trim();
+        String actual = Differ.generate("src/test/resources/fixtures/file3.JSON",
+                                        "src/test/resources/fixtures/file4.JSON", "json");
+        assertEquals(expected, actual);
+    }
 }

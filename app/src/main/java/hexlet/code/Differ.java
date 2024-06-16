@@ -17,7 +17,7 @@ public class Differ {
             case ".yml" -> Parser.ymlParse(filepath2);
             default -> throw new IllegalArgumentException("Unsupported file format: " + getFileExtension(filepath2));
         };
-        Set<Map<String, Object>> diff = getDiff(data1, data2);
+        List<Map<String, Object>> diff = getDiff(data1, data2);
         String output = Formatter.format(diff, format).trim();//Formatter.format(diff) а форматтер уже начинает работать и вытягивать значения
         //из каждой мапы листа.
         System.out.println(output);
@@ -68,13 +68,37 @@ public class Differ {
         differ.add(diff2);
         return diff;
     }
-    public static Set<Map<String, Object>> getDiff(Map<String, Object> data1, Map<String, Object> data2) {
-       // LinkedHashMap<String, Object> differ = new LinkedHashMap<>();
-        TreeSet<Map<String, Object>> diff = new TreeSet<>();
+    public static List<Map<String, Object>> getDiff(Map<String, Object> data1, Map<String, Object> data2) {
+
+       Set<String> keys = new TreeSet<>(data1.keySet());
+       List<Map<String, Object>> diff = new ArrayList<>();
         enum status {
             CHANGE, ADD, REMOVE, noDIFF
         }
-        data1.forEach((k, v) -> {
+        keys.addAll(data2.keySet());
+        keys.forEach(key -> {
+            LinkedHashMap<String, Object> differ = new LinkedHashMap<>();
+            if(data1.containsKey(key) && !data2.containsKey(key)) {
+                differ.put("key", key);
+                differ.put("type", status.REMOVE);
+                differ.put("value", data1.get(key));
+            } else if(data2.containsKey(key) && !data1.containsKey(key)) {
+                differ.put("key", key);
+                differ.put("type", status.ADD);
+                differ.put("value", data2.get(key));
+            } else if(Objects.equals(data1.get(key), data2.get(key))) {
+                differ.put("key", key);
+                differ.put("type", status.noDIFF);
+                differ.put("value", data2.get(key));
+            } else {
+                differ.put("key", key);
+                differ.put("type", status.CHANGE);
+                differ.put("value1", data1.get(key));
+                differ.put("value2", data2.get(key));
+            }
+            diff.add(differ);
+        });
+        /*data1.forEach((k, v) -> {
             if (data2.containsKey(k) && !Objects.equals(v, data2.get(k))) {
                 Map<String, Object> difference = new HashMap<>();
                 difference.put("key", k);
@@ -104,7 +128,7 @@ public class Differ {
                 differenceADD.put("value", data2.get(k));
                 diff.add(differenceADD);
             }
-        });
+        });*/
         return diff;
     }
 
