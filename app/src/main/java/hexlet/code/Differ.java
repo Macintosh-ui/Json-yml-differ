@@ -23,7 +23,7 @@ public class Differ {
         if (filepath.endsWith(".json") || filepath.endsWith(".JSON")) {
             return ".json";
         } else {
-            return".yml";
+            return ".yml";
         }
     }
 
