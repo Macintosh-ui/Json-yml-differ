@@ -56,8 +56,8 @@ public class DiffTest {
     @Test
     public void testJsonToJsonFormat() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
-        String actual = Differ.generate("/home/runner/work/java-project-71/java-project-71/app/src/test/resources" +
-                        "/fixtures/file3.json",
+        String actual = Differ.generate("/home/runner/work/java-project-71/java-project-71/app/src/test/resources"
+                        + "/fixtures/file3.json",
                 "/home/runner/work/java-project-71/java-project-71/app/src/test/resources/fixtures/file4.json", "json");
         assertEquals(mapper.readTree(expectedJson), mapper.readTree(actual));
     }
