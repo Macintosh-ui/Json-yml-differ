@@ -10,9 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class DiffTest {
-    public static String expectedStylish;
-    public static String expectedPlain;
-    public static String expectedJson;
+    private static String expectedStylish;
+    private static String expectedPlain;
+    private static String expectedJson;
 
     @BeforeAll
     public static void setUp() throws IOException {
