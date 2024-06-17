@@ -18,19 +18,13 @@ public final class App implements Callable<Integer> {
             description = "output outputFormat [default: stylish]", paramLabel = "outputFormat")
     private String outputFormat;
     public static void main(String[] args) {
-        CommandLine commandLine = new CommandLine(new App());
-        commandLine.parseArgs(args);
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
     }
 
     @Override
     public Integer call() throws Exception {
-        if (outputFormat.equals("stylish")) {
-            Differ.generate(filepath1, filepath2);
-        } else {
-            Differ.generate(filepath1, filepath2, outputFormat);
-        }
+        Differ.generate(filepath1, filepath2, outputFormat);
         return 1;
     }
 }

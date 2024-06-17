@@ -12,16 +12,21 @@ import java.util.Map;
 
 public class Parser {
 
-    public static Map<String, Object> jsonParse(String filePath) throws IOException {
-        Path path = Differ.getFilePath(filePath);
-        File file = path.toFile();
+    public static Map<String, Object> parse(Path filePath, String extension) throws IOException {
+        return switch (extension) {
+            case ".json" -> jsonParse(filePath);
+            case ".yml" -> ymlParse(filePath);
+            default -> throw new IllegalArgumentException("Unsupported extension: " + extension);
+        };
+    }
+    public static Map<String, Object> jsonParse(Path filePath) throws IOException {
+        File file = filePath.toFile();
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(file, new TypeReference<>() { });
     }
 
-    public static Map<String, Object> ymlParse(String filePath) throws IOException {
-        Path path = Differ.getFilePath(filePath);
-        File file = path.toFile();
+    public static Map<String, Object> ymlParse(Path filePath) throws IOException {
+        File file = filePath.toFile();
         ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
         return mapper.readValue(file, new TypeReference<>() { });
     }

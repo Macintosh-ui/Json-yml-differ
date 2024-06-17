@@ -10,13 +10,11 @@ import java.util.Map;
 public class Formatter {
 
     public static String format(List<Map<String, Object>> diff, String format) throws Exception {
-        String output;
-        output = switch (format) {
+        return switch (format) {
             case "stylish" -> Stylish.stylishFormat(diff);
             case "plain" -> Plain.plainFormat(diff);
             case "json" -> Json.jsonFormat(diff);
             default -> throw new IllegalStateException("Unexpected format: " + format);
         };
-        return output;
     }
 }
