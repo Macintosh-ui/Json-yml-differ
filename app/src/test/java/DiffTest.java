@@ -34,8 +34,8 @@ public class DiffTest {
 
     @Test
     public void testJsonStylishDiff() throws Exception {
-        String actual = Differ.generate("src/test/resources/fixtures/file3.JSON",
-                                        "src/test/resources/fixtures/file4.JSON", "stylish");
+        String actual = Differ.generate("src/test/resources/fixtures/file3.json",
+                                        "src/test/resources/fixtures/file4.json", "stylish");
         assertEquals(expectedStylish, actual);
     }
 
