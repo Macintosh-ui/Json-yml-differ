@@ -8,10 +8,8 @@ public class Differ {
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
         Map<String, Object> data1;
         Map<String, Object> data2;
-        String extension1 = getFileExtension(filepath1);
-        String extension2 = getFileExtension(filepath2);
-        data1 = Parser.parse(getFilePath(filepath1), extension1);
-        data2 = Parser.parse(getFilePath(filepath2), extension2);
+        data1 = Parser.parse(getFilePath(filepath1), getFileExtension(filepath1));
+        data2 = Parser.parse(getFilePath(filepath2), getFileExtension(filepath2));
         List<Map<String, Object>> diff = Diff.getDiff(data1, data2);
         System.out.println(Formatter.format(diff, format).trim());
         return Formatter.format(diff, format).trim();
