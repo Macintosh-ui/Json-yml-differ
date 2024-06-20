@@ -11,10 +11,10 @@ Requirements:
 - JDK v.21
 ***
 Build and setup:
-+Print make to start
-+Print make build to Setup	
-+Print make run-dist to Run
-+Print make help to print help
+*make - start
+*make build - Setup	
+*make run-dist - Run
+*make help - print help
 ***
 ## Hexlet tests and linter status:
 [![Actions Status](https://github.com/Macintosh-ui/java-project-71/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Macintosh-ui/java-project-71/actions)\
