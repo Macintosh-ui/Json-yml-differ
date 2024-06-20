@@ -26,7 +26,7 @@ public final class App implements Callable<Integer> {
     public Integer call() throws Exception {
         String result;
         try {
-             result = Differ.generate(filepath1, filepath2, outputFormat);
+            result = Differ.generate(filepath1, filepath2, outputFormat);
         } catch (Exception e) {
             return 1;
         }
