@@ -16,7 +16,7 @@ public class Stylish {
                         output.append("  + ").append(map.get("key")).append(": ").append(map.get("value")).append("\n");
                 case "REMOVE" ->
                         output.append("  - ").append(map.get("key")).append(": ").append(map.get("value")).append("\n");
-                case "noDIFF" ->
+                case "NO_DIFF" ->
                         output.append("    ").append(map.get("key")).append(": ").append(map.get("value")).append("\n");
                 default -> throw new IllegalStateException("Unexpected status: " + map.get("status"));
             }

@@ -17,7 +17,7 @@ public class Plain {
                                     bracketCheck(m.get("value1")), bracketCheck(m.get("value2"))));
                 case "ADD" -> output.append(String.format(added, m.get("key"), bracketCheck(m.get("value"))));
                 case "REMOVE" -> output.append(String.format(removed, m.get("key")));
-                case "noDIFF" -> output.append("");
+                case "NO_DIFF" -> output.append("");
                 default -> throw new IllegalStateException("Unexpected value: " + m.get("type"));
             }
         });
